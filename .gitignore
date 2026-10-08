@@ -1,0 +1,55 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build output
+dist/
+out-tsc/
+*.tgz
+
+# Angular CLI and tooling caches
+.angular/
+.nx/
+.eslintcache
+.stylelintcache
+*.tsbuildinfo
+
+# Tests and coverage
+coverage/
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+.vitest/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editors and IDEs
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+*.swp
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# AI assistant files, kept locally only
+CLAUDE.md
+CLAUDE.local.md
+**/CLAUDE.md
+.claude/
+.mcp.json
