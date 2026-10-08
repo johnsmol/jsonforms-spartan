@@ -34,7 +34,23 @@ Not yet published. Planned:
 npm install jsonforms-spartan @jsonforms/core @spartan-ng/brain
 ```
 
-The app needs Tailwind CSS v4 and a spartan theme (`ng g @spartan-ng/cli:init`). Then:
+Setup in an Angular 22 app (checked in a fresh `ng new` app on 2026-10-08):
+
+1. Tailwind CSS v4, with its PostCSS plugin. The spartan CLI expects Tailwind to be there already and
+   doesn't install it:
+
+   ```bash
+   npm install -D tailwindcss @tailwindcss/postcss postcss
+   ```
+
+   and a `.postcssrc.json` in the workspace root:
+
+   ```json
+   { "plugins": { "@tailwindcss/postcss": {} } }
+   ```
+
+2. A spartan theme: `npm install -D @spartan-ng/cli`, then `ng g @spartan-ng/cli:init`.
+3. The two steps below.
 
 - Let Tailwind see the renderers' classes, since Tailwind v4 doesn't scan `node_modules`. In the global
   stylesheet:
@@ -52,6 +68,10 @@ The app needs Tailwind CSS v4 and a spartan theme (`ng g @spartan-ng/cli:init`).
 
 The renderers ship their own copy of the spartan/ui components they use (styled through your theme's CSS
 variables), so they don't depend on the helm components in your app.
+
+**Bundle size.** JSON Forms validates with AJV, which with lodash adds about 200 kB (minified, before
+compression) to the bundle; this package's own code is about 16 kB. Load forms on lazy routes so that
+cost stays out of the initial bundle.
 
 ## Usage (planned API)
 

@@ -109,7 +109,8 @@
             "lintFilePatterns": [
               "projects/demo/src/app/**/*.ts",
               "projects/demo/src/app/**/*.html",
-              "projects/demo/src/main.ts"
+              "projects/demo/src/main.ts",
+              "e2e/**/*.ts"
             ]
           }
         }

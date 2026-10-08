@@ -44,6 +44,7 @@ npm start            # demo app at http://localhost:4200
 | `npm test` | Run all unit and render tests (Vitest) |
 | `npm run lint` | ESLint, including the import restrictions above |
 | `npm run format` / `format:check` | Prettier |
+| `npm run e2e` | Playwright + axe (WCAG 2.2 AA) on the demo; starts `ng serve demo` on port 4300. First run: `npx playwright install chromium` |
 | `npm run helm:diff` | Check the vendored helm against the CLI-generated reference (see `src/lib/ui/SNAPSHOT.md`) |
 
 The demo imports `jsonforms-spartan` and `jsonforms-spartan/core` from source through tsconfig path aliases, so
