@@ -8,7 +8,11 @@
       "jsonforms-spartan": ["./projects/jsonforms-spartan/src/public-api.ts"],
       "jsonforms-spartan/core": ["./projects/jsonforms-spartan/core/src/public-api.ts"],
       "@spartan-ng/helm/button": ["./projects/demo/src/ui/button/src/index.ts"],
-      "@spartan-ng/helm/utils": ["./projects/demo/src/ui/utils/src/index.ts"]
+      "@spartan-ng/helm/utils": ["./projects/demo/src/ui/utils/src/index.ts"],
+      "@spartan-ng/helm/field": ["./projects/demo/src/ui/field/src/index.ts"],
+      "@spartan-ng/helm/label": ["./projects/demo/src/ui/label/src/index.ts"],
+      "@spartan-ng/helm/separator": ["./projects/demo/src/ui/separator/src/index.ts"],
+      "@spartan-ng/helm/input": ["./projects/demo/src/ui/input/src/index.ts"]
     },
     "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true,
