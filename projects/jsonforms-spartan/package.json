@@ -25,6 +25,9 @@
     "@spartan-ng/brain": "^1.6.0"
   },
   "dependencies": {
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^3.5.0",
     "tslib": "^2.3.0"
   },
   "sideEffects": false

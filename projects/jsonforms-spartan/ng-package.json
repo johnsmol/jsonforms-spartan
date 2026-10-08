@@ -3,5 +3,7 @@
   "dest": "../../dist/jsonforms-spartan",
   "lib": {
     "entryFile": "src/public-api.ts"
-  }
+  },
+  "allowedNonPeerDependencies": ["class-variance-authority", "clsx", "tailwind-merge"],
+  "assets": ["THIRD_PARTY_NOTICES.md"]
 }
