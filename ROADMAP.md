@@ -2,7 +2,7 @@
 
 Living document. Last updated 2026-10-08.
 
-**Status:** planning finished on 2026-10-08. Next: M0 (§6). Decisions are recorded in [`docs/adr/`](./docs/adr/).
+**Status:** M0 in progress (workspace, tooling and CI landed 2026-10-08). Next: §6. Decisions are recorded in [`docs/adr/`](./docs/adr/).
 Tick the checkboxes here as work lands.
 
 Planning assumptions:
@@ -102,7 +102,13 @@ The only spartan dependency outside `src/lib/ui/` is `@spartan-ng/brain`.
 - Peer dependencies:
   - `@angular/core|common|forms|cdk` `^22`. Signal Forms is stable from 22.0, so Angular 21 is dropped.
   - `@jsonforms/core` `~3.8.0`. Pin the minor, because 3.9 is in alpha.
-  - `@spartan-ng/brain` with the range verified in M0 (it needs Signal Forms support, the `touch` output on v22).
+  - `@spartan-ng/brain` `^1.6.0`. Verified in M0: 1.6.3 declares Angular `>=21 <23` peers; 1.6 is the oldest
+    minor tested here. Narrow it if a 1.x minor breaks the renderers.
+  - Set in M0 (2026-10-08) against Angular 22.2.1, `@jsonforms/core` 3.8.0, `@spartan-ng/brain` 1.6.3,
+    Tailwind 4.3.
+- Generated helm imports `class-variance-authority`, `clsx` and `tailwind-merge` at runtime. Once helm is
+  vendored (M1), these become `dependencies` of the package. Brain itself also peers on `luxon` and
+  `tw-animate-css`; check in M1 whether the vendored components need them.
 - App prerequisites: Tailwind CSS v4 and a spartan theme. Users must add
   `@source "../node_modules/jsonforms-spartan";` to their CSS, because Tailwind v4 doesn't scan `node_modules`.
 
@@ -189,15 +195,15 @@ Session estimates are for one person at about 3 hours a session.
 ### M0: Foundations (≈ 3 sessions)
 
 - [x] Housekeeping: fix the README licence line (`© 2026 Giovanni Piccolo`)
-- [ ] Add `.gitattributes` (`* text=auto eol=lf`). The working copy is on Windows and has CRLF files.
-- [ ] Angular 22 workspace: `ng new --no-create-application`, library, `core` secondary entry point, demo app
-- [ ] Tailwind v4, the spartan theme and the spartan CLI in the **demo app**, which is also where reference helm
+- [x] Add `.gitattributes` (`* text=auto eol=lf`). The working copy is on Windows and has CRLF files.
+- [x] Angular 22 workspace: `ng new --no-create-application`, library, `core` secondary entry point, demo app
+- [x] Tailwind v4, the spartan theme and the spartan CLI in the **demo app**, which is also where reference helm
       comes from
-- [ ] Verify versions and set the peer ranges (§1.4)
-- [ ] Vitest, angular-eslint, Prettier. ESLint `no-restricted-imports` in the library for `rxjs`,
+- [x] Verify versions and set the peer ranges (§1.4)
+- [x] Vitest, angular-eslint, Prettier. ESLint `no-restricted-imports` in the library for `rxjs`,
       `@angular/core/rxjs-interop`, `@jsonforms/angular` and reactive forms (`@angular/forms`; only
       `@angular/forms/signals` is allowed)
-- [ ] GitHub Actions: lint, test, build on PRs
+- [x] GitHub Actions: lint, test, build on PRs
 - [ ] Decide the npm name; `CONTRIBUTING.md`
 - [x] `docs/adr/` with ADR-0001 (signals only, on core), ADR-0002 (helm vendoring), ADR-0003 (empty values, proposed)
 
@@ -287,7 +293,7 @@ Rough calendar at one session a week: **0.1.0 ≈ 4.5–5 months**, 0.2.0 ≈ +1
 | `''` vs missing property mismatch between inputs and JSON Schema `required` | Required fields look valid | ADR-0003 in M1; adapter tests |
 | Re-implementing `@jsonforms/angular` misses behaviours (middleware, additional errors) | Feature gaps | Listed as non-goals for 0.1; added on request |
 | Signal Forms is young (stable since 22.0) | API polish in minors | Signal Forms usage stays in `/core` and the renderers; early-warning job |
-| `@spartan-ng/brain` breaking change despite semver | Build/runtime errors | Peer range pinned to tested minors; weekly job |
+| `@spartan-ng/brain` breaking change despite semver | Build/runtime errors | Caret range from the oldest tested minor (`^1.6.0`); the weekly job tests the latest; narrow the range if a minor breaks |
 | Large schemas: whole-tree AJV validation on every change | Typing lag | Measure in the demo; debounce in the adapter if needed |
 | Scope creep at 2–4 h/week | Never ships | 0.1.0 = primitives + layouts; everything else after |
 
@@ -295,6 +301,7 @@ Rough calendar at one session a week: **0.1.0 ≈ 4.5–5 months**, 0.2.0 ≈ +1
 
 ## 6. Next three sessions
 
-1. M0: Angular 22 workspace, library + `core` entry point, demo app, Tailwind v4, spartan theme, CI, lint guards.
-2. M1: `<jf-form>` + AJV → Standard Schema adapter with tests, and the nested-path spike.
-3. M1: dispatcher, `injectJfControl()`, text control + vertical layout + rules in the demo.
+1. M0 wrap-up: npm name, `CONTRIBUTING.md`, CI jobs as required checks on `main`.
+   M1: `<jf-form>` + AJV → Standard Schema adapter with tests, and the nested-path spike.
+2. M1: dispatcher, `injectJfControl()`, text control + vertical layout + rules in the demo.
+3. M1: vendor helm `field`, `label`, `input` (+ `tools/helm-diff`), and the `npm pack` fresh-app check.

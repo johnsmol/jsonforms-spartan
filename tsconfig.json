@@ -1,0 +1,41 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "paths": {
+      "jsonforms-spartan": ["./projects/jsonforms-spartan/src/public-api.ts"],
+      "jsonforms-spartan/core": ["./projects/jsonforms-spartan/core/src/public-api.ts"],
+      "@spartan-ng/helm/button": ["./projects/demo/src/ui/button/src/index.ts"],
+      "@spartan-ng/helm/utils": ["./projects/demo/src/ui/utils/src/index.ts"]
+    },
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "preserve"
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true
+  },
+  "files": [],
+  "references": [
+    {
+      "path": "./projects/jsonforms-spartan/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/jsonforms-spartan/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/demo/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/demo/tsconfig.spec.json"
+    }
+  ]
+}

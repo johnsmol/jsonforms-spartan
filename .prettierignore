@@ -1,0 +1,9 @@
+dist/
+out-tsc/
+coverage/
+.angular/
+package-lock.json
+*.md
+# Generated spartan helm: keep byte-identical to CLI output so tools/helm-diff stays clean
+projects/demo/src/ui/
+projects/jsonforms-spartan/src/lib/ui/

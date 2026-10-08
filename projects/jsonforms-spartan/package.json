@@ -1,0 +1,31 @@
+{
+  "name": "jsonforms-spartan",
+  "version": "0.0.0",
+  "description": "Signal-based Angular renderers for JSON Forms, built with spartan/ui",
+  "license": "MIT",
+  "author": "Giovanni Piccolo",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johnsmol/jsonforms-spartan.git"
+  },
+  "keywords": [
+    "angular",
+    "jsonforms",
+    "json-schema",
+    "forms",
+    "signals",
+    "spartan"
+  ],
+  "peerDependencies": {
+    "@angular/cdk": "^22.0.0",
+    "@angular/common": "^22.0.0",
+    "@angular/core": "^22.0.0",
+    "@angular/forms": "^22.0.0",
+    "@jsonforms/core": "~3.8.0",
+    "@spartan-ng/brain": "^1.6.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false
+}
