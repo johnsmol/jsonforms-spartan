@@ -28,7 +28,8 @@
         "test": {
           "builder": "@angular/build:unit-test",
           "options": {
-            "tsConfig": "projects/jsonforms-spartan/tsconfig.spec.json"
+            "tsConfig": "projects/jsonforms-spartan/tsconfig.spec.json",
+            "include": ["**/*.spec.ts", "../core/**/*.spec.ts"]
           }
         },
         "lint": {
