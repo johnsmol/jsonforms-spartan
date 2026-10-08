@@ -5,6 +5,7 @@ node_modules/
 # Build output
 dist/
 out-tsc/
+/tmp/
 *.tgz
 
 # Angular CLI and tooling caches
@@ -21,6 +22,7 @@ playwright-report/
 blob-report/
 playwright/.cache/
 .vitest/
+__screenshots__/
 
 # Environment and secrets
 .env
@@ -38,6 +40,8 @@ pnpm-debug.log*
 .vscode/*
 !.vscode/extensions.json
 !.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
 .idea/
 *.swp
 *~
