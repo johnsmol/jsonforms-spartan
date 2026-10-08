@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { HlmButton } from '@spartan-ng/helm/button';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [HlmButton],
+  imports: [RouterOutlet],
   templateUrl: './app.html',
 })
 export class App {}

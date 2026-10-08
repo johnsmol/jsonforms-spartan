@@ -2,8 +2,8 @@
 
 Living document. Last updated 2026-10-08.
 
-**Status:** M1 in progress: `<jf-form>`, the AJV adapter, ADR-0003, `<jf-dispatch>` and the `injectJf*()` helpers
-landed on 2026-10-08. Next: §6. Decisions are recorded in [`docs/adr/`](./docs/adr/).
+**Status:** M1 in progress: the `/core` binding, ADR-0003, vendored helm, the text control and vertical layout,
+and the first demo page landed on 2026-10-08. Next: §6. Decisions are recorded in [`docs/adr/`](./docs/adr/).
 Tick the checkboxes here as work lands.
 
 Planning assumptions:
@@ -112,9 +112,11 @@ The only spartan dependency outside `src/lib/ui/` is `@spartan-ng/brain`.
     minor tested here. Narrow it if a 1.x minor breaks the renderers.
   - Set in M0 (2026-10-08) against Angular 22.2.1, `@jsonforms/core` 3.8.0, `@spartan-ng/brain` 1.6.3,
     Tailwind 4.3.
-- Generated helm imports `class-variance-authority`, `clsx` and `tailwind-merge` at runtime. Once helm is
-  vendored (M1), these become `dependencies` of the package. Brain itself also peers on `luxon` and
-  `tw-animate-css`; check in M1 whether the vendored components need them.
+- Generated helm imports `class-variance-authority`, `clsx` and `tailwind-merge` at runtime, so these are
+  `dependencies` of the package since M1. The vendored components so far (`field`, `input`, `label`) don't use
+  brain's `luxon` or `tw-animate-css` peers; recheck when the date picker is vendored (M2).
+- `@jsonforms/core` brings CommonJS modules (`lodash`, `ajv`, `ajv-formats`); the README tells apps to list
+  them in `allowedCommonJsDependencies`.
 - App prerequisites: Tailwind CSS v4 and a spartan theme. Users must add
   `@source "../node_modules/jsonforms-spartan";` to their CSS, because Tailwind v4 doesn't scan `node_modules`.
 
@@ -223,8 +225,8 @@ Session estimates are for one person at about 3 hours a session.
 - [x] AJV → Standard Schema adapter + unit tests (nested paths, `required` → child field, `oneOf` noise)
 - [x] Spike: confirm issues reach nested fields through `validateStandardSchema`; otherwise use `validateTree`
 - [x] `<jf-dispatch>` + registry + `injectJfControl()` / `injectJfLayout()`
-- [ ] Vendor helm `field`, `label`, `input`; text control + VerticalLayout
-- [ ] Demo schema with a required field, a HIDE rule and a DISABLE rule; runs zoneless, all components OnPush
+- [x] Vendor helm `field`, `label`, `input`; text control + VerticalLayout
+- [x] Demo schema with a required field, a HIDE rule and a DISABLE rule; runs zoneless, all components OnPush
 - [x] Decide ADR-0003 (empty-value handling)
 - [ ] `ng build`, `npm pack`, install the tarball in a **fresh** Angular 22 app. This checks the packaging, the
       peers, the `@source` instruction and that no `rxjs` import appears in `dist/`
@@ -311,7 +313,7 @@ Rough calendar at one session a week: **0.1.0 ≈ 4.5–5 months**, 0.2.0 ≈ +1
 
 ## 6. Next three sessions
 
-1. M1: vendor helm `field`, `label`, `input` (+ `tools/helm-diff`); text control + VerticalLayout; demo with
-   required, HIDE and DISABLE rules.
-2. M1: `npm pack` check in a fresh Angular 22 app; publish `0.0.1` under `next` to reserve the name.
-3. M2: number and boolean controls (check that checkbox/switch accept a `null` placeholder, ADR-0003).
+1. M1: `npm pack` check in a fresh Angular 22 app; publish `0.0.1` under `next` to reserve the name.
+   Playwright + axe on the demo page.
+2. M2: number control, and the Definition-of-done items still open for text: read-only mode.
+3. M2: boolean control (check that checkbox/switch accept a `null` placeholder, ADR-0003).
