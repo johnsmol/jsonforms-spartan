@@ -55,6 +55,13 @@ module.exports = defineConfig([
     },
   },
   {
+    // Tests walk field trees by dynamic keys, which the FieldTree types can't express.
+    files: ['**/*.spec.ts'],
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
+    },
+  },
+  {
     files: ['**/*.html'],
     extends: [angular.configs.templateRecommended, angular.configs.templateAccessibility],
   },

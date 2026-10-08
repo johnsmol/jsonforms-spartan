@@ -2,7 +2,7 @@
 
 Living document. Last updated 2026-10-08.
 
-**Status:** M0 done on 2026-10-08. Next: M1 (§6). Decisions are recorded in [`docs/adr/`](./docs/adr/).
+**Status:** M1 in progress: `<jf-form>`, the AJV adapter and ADR-0003 landed on 2026-10-08. Next: §6. Decisions are recorded in [`docs/adr/`](./docs/adr/).
 Tick the checkboxes here as work lands.
 
 Planning assumptions:
@@ -63,17 +63,19 @@ dependency, and the CDK uses it internally.
   generated from the schema, so there aren't two sets of rules that could disagree.
   - Map AJV `instancePath` to path segments. For `required` errors, append `params.missingProperty` so the
     error lands on the missing child field, as JSON Forms core does.
-  - To verify in M1: Standard Schema issues reach nested fields. Fallback: `validateTree` with explicit
-    field targets.
+  - Verified in M1: issues reach nested object and array fields, so no `validateTree` fallback is needed.
+    Paths are shortened to the deepest existing field, because Signal Forms throws on a path through an
+    absent parent.
 - **Rules:**
   - Control-level ENABLE/DISABLE → Signal Forms `disabled(path, …)` logic, so control state and ARIA follow
     automatically.
   - SHOW/HIDE → a `computed()` in the renderer using core's rule evaluation. Layouts can have rules too, and a
     layout has no data path.
   - Hidden fields are still validated, as in JSON Forms. Document this.
-- **Empty values:** native inputs write `''`. The JSON Forms convention is to remove the property so that
-  `required` behaves. Pick one approach in M1 and record it in ADR-0003: normalise in the AJV adapter and
-  clean the emitted data, or use thin `FormValueControl` wrappers.
+- **Empty values and the form model** (ADR-0003): Signal Forms has no field for an absent property, so
+  `<jf-form>` gives `form()` a *materialised* model in which every schema property exists (`''` for
+  strings, `null` for other primitives). The `data` it emits, and what AJV validates, is that model with
+  empty values pruned, following the JSON Forms convention.
 - **Validation mode:** `ValidateAndShow` / `ValidateAndHide` / `NoValidation`, as in JSON Forms. Error
   visibility follows spartan's `ErrorStateMatcher` (shown once touched by default, and everywhere after submit).
 - **Schema changes:** the Signal Forms schema function runs once, so the form is rebuilt when the `schema` or
@@ -210,13 +212,13 @@ Session estimates are for one person at about 3 hours a session.
 
 ### M1: Signal binding tracer bullet (≈ 5 sessions). Proves the architecture end to end.
 
-- [ ] `<jf-form>`: data model signal, `form()`, rebuild on schema change, UI schema generation when none is given
-- [ ] AJV → Standard Schema adapter + unit tests (nested paths, `required` → child field, `oneOf` noise)
-- [ ] Spike: confirm issues reach nested fields through `validateStandardSchema`; otherwise use `validateTree`
+- [x] `<jf-form>`: data model signal, `form()`, rebuild on schema change, UI schema generation when none is given
+- [x] AJV → Standard Schema adapter + unit tests (nested paths, `required` → child field, `oneOf` noise)
+- [x] Spike: confirm issues reach nested fields through `validateStandardSchema`; otherwise use `validateTree`
 - [ ] `<jf-dispatch>` + registry + `injectJfControl()` / `injectJfLayout()`
 - [ ] Vendor helm `field`, `label`, `input`; text control + VerticalLayout
 - [ ] Demo schema with a required field, a HIDE rule and a DISABLE rule; runs zoneless, all components OnPush
-- [ ] Decide ADR-0003 (empty-value handling)
+- [x] Decide ADR-0003 (empty-value handling)
 - [ ] `ng build`, `npm pack`, install the tarball in a **fresh** Angular 22 app. This checks the packaging, the
       peers, the `@source` instruction and that no `rxjs` import appears in `dist/`
 - [ ] Optional: publish `0.0.1` under the npm `next` tag to reserve the name
@@ -290,8 +292,8 @@ Rough calendar at one session a week: **0.1.0 ≈ 4.5–5 months**, 0.2.0 ≈ +1
 
 | Risk | Impact | Mitigation |
 |---|---|---|
-| Standard Schema issues don't reach nested fields as expected | Errors on the wrong field | M1 spike; `validateTree` fallback |
-| `''` vs missing property mismatch between inputs and JSON Schema `required` | Required fields look valid | ADR-0003 in M1; adapter tests |
+| Signal Forms changes how it creates fields or routes issues | Errors on the wrong field, unbindable controls | Behaviour pinned by `signal-forms-assumptions.spec.ts`; weekly job |
+| `''` vs missing property mismatch between inputs and JSON Schema `required` | Required fields look valid | Settled by ADR-0003; adapter and `<jf-form>` tests |
 | Re-implementing `@jsonforms/angular` misses behaviours (middleware, additional errors) | Feature gaps | Listed as non-goals for 0.1; added on request |
 | Signal Forms is young (stable since 22.0) | API polish in minors | Signal Forms usage stays in `/core` and the renderers; early-warning job |
 | `@spartan-ng/brain` breaking change despite semver | Build/runtime errors | Caret range from the oldest tested minor (`^1.6.0`); the weekly job tests the latest; narrow the range if a minor breaks |
@@ -302,6 +304,8 @@ Rough calendar at one session a week: **0.1.0 ≈ 4.5–5 months**, 0.2.0 ≈ +1
 
 ## 6. Next three sessions
 
-1. M1: `<jf-form>` + AJV → Standard Schema adapter with tests, and the nested-path spike.
-2. M1: dispatcher, `injectJfControl()`, text control + vertical layout + rules in the demo.
-3. M1: vendor helm `field`, `label`, `input` (+ `tools/helm-diff`), and the `npm pack` fresh-app check.
+1. M1: `<jf-dispatch>`, registry and `injectJfControl()` / `injectJfLayout()` (field lookup by data path,
+   rules), with a plain test renderer.
+2. M1: vendor helm `field`, `label`, `input` (+ `tools/helm-diff`); text control + VerticalLayout; demo with
+   required, HIDE and DISABLE rules.
+3. M1: `npm pack` check in a fresh Angular 22 app; publish `0.0.1` under `next` to reserve the name.

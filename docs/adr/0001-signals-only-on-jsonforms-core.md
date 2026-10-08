@@ -1,6 +1,6 @@
 # ADR-0001: Signals only, built on `@jsonforms/core`
 
-- Status: Accepted (2026-10-08). Implementation is verified in M1.
+- Status: Accepted (2026-10-08). Point 4 verified in M1 (see below).
 - Context owner: Giovanni Piccolo
 
 ## Context
@@ -45,6 +45,13 @@ switch) support `[formField]`.
    - lint rules and a CI check on `dist/` enforce this
 
    `rxjs` stays installed in apps, because `@angular/core` 22 requires it as a peer and the CDK uses it.
+
+## Verified in M1
+
+- Standard Schema issues reach nested object and array fields through `validateStandardSchema`, so the
+  `validateTree` fallback isn't needed.
+- Signal Forms has no field for an absent property, so the model given to `form()` can't be the raw
+  JSON Forms data. ADR-0003 describes the form model that `<jf-form>` builds instead.
 
 ## Consequences
 
