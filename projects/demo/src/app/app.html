@@ -1,7 +1,9 @@
-<main class="mx-auto flex max-w-2xl flex-col gap-4 p-6">
-  <h1 class="text-2xl font-semibold">jsonforms-spartan demo</h1>
-  <p class="text-muted-foreground">Signal-based JSON Forms renderers built with spartan/ui.</p>
-  <div>
-    <button hlmBtn type="button">Spartan theme check</button>
-  </div>
-</main>
+<div class="mx-auto flex max-w-2xl flex-col gap-8 p-6">
+  <header class="flex flex-col gap-1">
+    <h1 class="text-2xl font-semibold">jsonforms-spartan demo</h1>
+    <p class="text-muted-foreground">Signal-based JSON Forms renderers built with spartan/ui.</p>
+  </header>
+  <main>
+    <router-outlet />
+  </main>
+</div>

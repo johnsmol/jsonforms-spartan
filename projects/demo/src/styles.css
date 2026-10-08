@@ -4,6 +4,9 @@
 @import 'tailwindcss/utilities.css';
 
 @import '@spartan-ng/brain/hlm-tailwind-preset.css';
+
+/* The library's templates, as an app would add node_modules/jsonforms-spartan (see README). */
+@source '../../jsonforms-spartan/src';
 /* You can add global styles to this file, and also import other style files */
 
 :root {

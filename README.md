@@ -34,6 +34,25 @@ Not yet published. Planned:
 npm install jsonforms-spartan @jsonforms/core @spartan-ng/brain
 ```
 
+The app needs Tailwind CSS v4 and a spartan theme (`ng g @spartan-ng/cli:init`). Then:
+
+- Let Tailwind see the renderers' classes, since Tailwind v4 doesn't scan `node_modules`. In the global
+  stylesheet:
+
+  ```css
+  @source "../node_modules/jsonforms-spartan";
+  ```
+
+- `@jsonforms/core` uses CommonJS modules, which makes the Angular CLI print a warning for each. To silence
+  them, add to the build options in `angular.json`:
+
+  ```json
+  "allowedCommonJsDependencies": ["ajv", "ajv-formats", "lodash"]
+  ```
+
+The renderers ship their own copy of the spartan/ui components they use (styled through your theme's CSS
+variables), so they don't depend on the helm components in your app.
+
 ## Usage (planned API)
 
 The form data is a signal, two-way bound to a `<jf-form>` host. Renderers are standalone components, each with a tester and a rank, exported as a single array.

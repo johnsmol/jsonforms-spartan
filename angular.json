@@ -61,7 +61,8 @@
                 "input": "projects/demo/public"
               }
             ],
-            "styles": ["projects/demo/src/styles.css"]
+            "styles": ["projects/demo/src/styles.css"],
+            "allowedCommonJsDependencies": ["ajv", "ajv-formats", "lodash"]
           },
           "configurations": {
             "production": {
