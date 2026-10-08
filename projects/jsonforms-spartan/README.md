@@ -1,64 +1,20 @@
-# JsonformsSpartan
+# jsonforms-spartan
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.1.0.
+> Unofficial, community-maintained renderer set that lets [JSON Forms](https://jsonforms.io) draw forms with
+> [spartan/ui](https://spartan.ng) components in Angular.
 
-## Code scaffolding
+Built on signals and Angular Signal Forms, with no RxJS in the package's code or API. It has two entry points:
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- `jsonforms-spartan/core`: a signal-based Angular binding for `@jsonforms/core`
+- `jsonforms-spartan`: renderers built with spartan/ui
 
-```bash
-ng generate component component-name
-```
+> **Status: pre-alpha.** The API may change without notice.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Requires Angular 22, `@jsonforms/core` 3.8 and `@spartan-ng/brain` 1.x. Documentation, the roadmap and the
+issue tracker are on [GitHub](https://github.com/johnsmol/jsonforms-spartan).
 
-```bash
-ng generate --help
-```
+This project is not affiliated with or endorsed by EclipseSource (JSON Forms) or the spartan/ui project.
 
-## Building
+## License
 
-To build the library, run:
-
-```bash
-ng build jsonforms-spartan
-```
-
-This command will compile your project, and the build artifacts will be placed in the `dist/` directory.
-
-### Publishing the Library
-
-Once the project is built, you can publish your library by following these steps:
-
-1. Navigate to the `dist` directory:
-
-   ```bash
-   cd dist/jsonforms-spartan
-   ```
-
-2. Run the `npm publish` command to publish your library to the npm registry:
-   ```bash
-   npm publish
-   ```
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+MIT © 2026 Giovanni Piccolo

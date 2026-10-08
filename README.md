@@ -116,7 +116,7 @@ The detailed implementation plan is in [ROADMAP.md](./ROADMAP.md).
 
 ## Contributing
 
-Contributions are welcome once the repository is public. Please open an issue to discuss larger changes first. A `CONTRIBUTING.md` with development setup and the renderer checklist will follow.
+Contributions are welcome. Please open an issue to discuss larger changes first. See [CONTRIBUTING.md](./CONTRIBUTING.md) for the development setup, ground rules and the renderer checklist.
 
 ## Maintenance
 
