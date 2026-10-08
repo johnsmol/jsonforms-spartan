@@ -2,7 +2,7 @@
 
 > Unofficial, community-maintained renderer set that lets [JSON Forms](https://jsonforms.io) draw forms with [spartan/ui](https://spartan.ng) components in Angular.
 
-One JSON Schema (plus an optional UI Schema) produces the form, its validation and its layout, with no Angular Material required.
+One JSON Schema (plus an optional UI Schema) produces the form, its validation and its layout, with no Angular Material required. Built on signals and Angular Signal Forms, with no RxJS in the package's code or API.
 
 > **Status: pre-alpha.** The scope below is the plan for v0.1. Nothing is published to npm yet and the API may change.
 
@@ -20,54 +20,54 @@ Targets the versions below (checked 2026-10-07). A full compatibility matrix wil
 
 | Package | Version | Angular peer |
 |---|---|---|
+| `@angular/core`, `@angular/forms` | 22.x | – |
 | `@jsonforms/core` | 3.8.0 | – |
-| `@jsonforms/angular` | 3.8.0 | ^20 / ^21 / ^22 |
 | `@spartan-ng/brain` | 1.6.1 | >=21 <23 |
 
-In practice this means Angular 21 or 22.
+Angular 22 is required, because Signal Forms is stable from 22.0. The package builds on the framework-agnostic `@jsonforms/core` and does **not** use `@jsonforms/angular` (which is RxJS-based), so it can't be combined with `@jsonforms/angular` renderers.
 
 ## Installation
 
 Not yet published. Planned:
 
 ```bash
-npm install @<scope>/jsonforms-spartan @jsonforms/core @jsonforms/angular @spartan-ng/brain
+npm install jsonforms-spartan @jsonforms/core @spartan-ng/brain
 ```
 
 ## Usage (planned API)
 
-The renderers follow the same structure as `@jsonforms/angular-material`: one standalone component per renderer, each with a tester and a rank, exported as a single array.
+The form data is a signal, two-way bound to a `<jf-form>` host. Renderers are standalone components, each with a tester and a rank, exported as a single array.
 
 ```ts
-import { Component } from '@angular/core';
-import { JsonForms } from '@jsonforms/angular';
-import { spartanRenderers } from '@<scope>/jsonforms-spartan';
+import { Component, signal } from '@angular/core';
+import { JfForm } from 'jsonforms-spartan/core';
+import { spartanRenderers } from 'jsonforms-spartan';
 
 @Component({
   selector: 'app-record-form',
-  standalone: true,
-  imports: [JsonForms],
+  imports: [JfForm],
   template: `
-    <jsonforms
-      [data]="data"
+    <jf-form #jf="jfForm"
       [schema]="schema"
       [uischema]="uischema"
       [renderers]="renderers"
-      (dataChange)="data = $event"
-    />
+      [(data)]="data" />
+    <button (click)="jf.submit(save)" [disabled]="jf.form().invalid()">Save</button>
   `,
 })
 export class RecordFormComponent {
   renderers = spartanRenderers;
   schema = { /* your JSON Schema */ };
   uischema = { /* optional UI Schema */ };
-  data = {};
+  data = signal({});
 }
 ```
 
-The exact component and module names depend on the `@jsonforms/angular` version and will be confirmed once the first prototype is in place.
+Names are tentative until the first prototype is in place. See [ROADMAP.md](./ROADMAP.md).
 
 ## Roadmap: scope for v0.1
+
+The detailed implementation plan is in [ROADMAP.md](./ROADMAP.md).
 
 **Controls**
 
@@ -101,7 +101,8 @@ The exact component and module names depend on the `@jsonforms/angular` version 
 
 ## Design principles
 
-- **Standalone components, signals and OnPush** throughout; tested zoneless.
+- **Signals only.** Standalone, OnPush components; data and validation through Angular Signal Forms (`[formField]`); tested zoneless. No RxJS in the package's code, API or dependencies (Angular itself still requires `rxjs` as a peer).
+- **JSON Schema is the single validation contract.** AJV errors reach Signal Forms through a Standard Schema adapter, so there is no second set of validators to keep in sync.
 - **Theming through Tailwind CSS variables.** spartan/ui "helm" components are copied into apps rather than imported from npm, so this package ships its own helm copies for simpler installation. Packaging details are still being decided.
 - **Accessibility first.** spartan's `brain` primitives handle ARIA and keyboard behaviour. On top of that, the renderers aim for correct labels, error announcement (`aria-describedby`, live region) and focus on the first invalid field. Target: WCAG 2.2 AA, checked with axe-core in CI.
 - **Domain-specific renderers stay out of this package** (for example ORCID, ROR, ontology term lookup, units of measure). Custom renderers are supported through the standard JSON Forms tester mechanism, and a guide will be added.
@@ -123,8 +124,8 @@ The goal is to track new releases of JSON Forms and spartan/ui. Compatibility up
 
 ## Acknowledgements
 
-Built on [JSON Forms](https://jsonforms.io) by EclipseSource and [spartan/ui](https://spartan.ng). The structure of this package is modelled on `@jsonforms/angular-material`.
+Built on [JSON Forms](https://jsonforms.io) by EclipseSource and [spartan/ui](https://spartan.ng). Renderer testers and ranks follow `@jsonforms/angular-material`, so the behaviour is familiar.
 
 ## License
 
-[MIT](./LICENSE) © <year> <copyright holder>
+[MIT](./LICENSE) © 2026 Giovanni Piccolo
