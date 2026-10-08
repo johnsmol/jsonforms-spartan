@@ -2,7 +2,8 @@
 
 Living document. Last updated 2026-10-08.
 
-**Status:** M1 in progress: `<jf-form>`, the AJV adapter and ADR-0003 landed on 2026-10-08. Next: §6. Decisions are recorded in [`docs/adr/`](./docs/adr/).
+**Status:** M1 in progress: `<jf-form>`, the AJV adapter, ADR-0003, `<jf-dispatch>` and the `injectJf*()` helpers
+landed on 2026-10-08. Next: §6. Decisions are recorded in [`docs/adr/`](./docs/adr/).
 Tick the checkboxes here as work lands.
 
 Planning assumptions:
@@ -69,8 +70,10 @@ dependency, and the CDK uses it internally.
 - **Rules:**
   - Control-level ENABLE/DISABLE → Signal Forms `disabled(path, …)` logic, so control state and ARIA follow
     automatically.
-  - SHOW/HIDE → a `computed()` in the renderer using core's rule evaluation. Layouts can have rules too, and a
-    layout has no data path.
+  - SHOW/HIDE → evaluated by `<jf-dispatch>`, which doesn't render a hidden element at all. Layouts can have
+    rules too, and a layout has no data path.
+  - Rules in the root UI schema are applied when the form is built; UI schemas that renderers create at
+    runtime (array items, M4) need their own handling.
   - Hidden fields are still validated, as in JSON Forms. Document this.
 - **Empty values and the form model** (ADR-0003): Signal Forms has no field for an absent property, so
   `<jf-form>` gives `form()` a *materialised* model in which every schema property exists (`''` for
@@ -151,19 +154,20 @@ export class RecordFormComponent {
 }
 ```
 
-**A renderer** (sketch). It has no base class and no RxJS; all state arrives as signals.
+**A renderer** (sketch; the core API exists since M1, the helm markup is still to be checked). It has no base
+class and no RxJS; all state arrives as signals.
 
 ```ts
 @Component({
   selector: 'jfs-text-control',
   imports: [FormField, HlmFieldImports, HlmInput],
   template: `
-    @if (c.visible()) {
+    @if (c.field(); as field) {
       <div hlmField>
-        <label hlmFieldLabel [for]="c.id()">{{ c.label() }}</label>
-        <input hlmInput [id]="c.id()" [formField]="c.field()" />
+        <label hlmFieldLabel [for]="c.id">{{ c.label() }}</label>
+        <input hlmInput [id]="c.id" [formField]="field" />
         @if (c.description()) { <p hlmFieldDescription>{{ c.description() }}</p> }
-        @for (e of c.field()().errors(); track e) {
+        @for (e of field().errors(); track e) {
           <hlm-field-error [validator]="e.kind">{{ e.message }}</hlm-field-error>
         }
       </div>
@@ -171,13 +175,16 @@ export class RecordFormComponent {
   `,
 })
 export class TextControlRenderer {
-  protected readonly c = injectJfControl();
+  protected readonly c = injectJfControl<string>();
 }
 export const textControlTester = rankWith(1, isStringControl);
 ```
 
-`injectJfControl()` returns `field` (the `FieldTree` at the control's path) plus `label`, `description`,
-`required`, `visible`, `enabled`, `id`, `schema`, `uischema` and `path`, all as signals.
+`injectJfControl<T>()` returns `field` (the `FieldTree<T>` at the control's path, `undefined` only where the
+data has no field, such as an absent array) plus `label`, `showLabel`, `description`, `required`, `enabled`,
+`schema`, `uischema` and `path` as signals, and a unique `id`. Visibility is handled by `<jf-dispatch>`.
+`injectJfLayout()` returns `elements`, `schema`, `path`, `label` and `enabled` for passing on to child
+`<jf-dispatch>` elements.
 
 **Definition of done for every renderer:**
 
@@ -215,7 +222,7 @@ Session estimates are for one person at about 3 hours a session.
 - [x] `<jf-form>`: data model signal, `form()`, rebuild on schema change, UI schema generation when none is given
 - [x] AJV → Standard Schema adapter + unit tests (nested paths, `required` → child field, `oneOf` noise)
 - [x] Spike: confirm issues reach nested fields through `validateStandardSchema`; otherwise use `validateTree`
-- [ ] `<jf-dispatch>` + registry + `injectJfControl()` / `injectJfLayout()`
+- [x] `<jf-dispatch>` + registry + `injectJfControl()` / `injectJfLayout()`
 - [ ] Vendor helm `field`, `label`, `input`; text control + VerticalLayout
 - [ ] Demo schema with a required field, a HIDE rule and a DISABLE rule; runs zoneless, all components OnPush
 - [x] Decide ADR-0003 (empty-value handling)
@@ -304,8 +311,7 @@ Rough calendar at one session a week: **0.1.0 ≈ 4.5–5 months**, 0.2.0 ≈ +1
 
 ## 6. Next three sessions
 
-1. M1: `<jf-dispatch>`, registry and `injectJfControl()` / `injectJfLayout()` (field lookup by data path,
-   rules), with a plain test renderer.
-2. M1: vendor helm `field`, `label`, `input` (+ `tools/helm-diff`); text control + VerticalLayout; demo with
+1. M1: vendor helm `field`, `label`, `input` (+ `tools/helm-diff`); text control + VerticalLayout; demo with
    required, HIDE and DISABLE rules.
-3. M1: `npm pack` check in a fresh Angular 22 app; publish `0.0.1` under `next` to reserve the name.
+2. M1: `npm pack` check in a fresh Angular 22 app; publish `0.0.1` under `next` to reserve the name.
+3. M2: number and boolean controls (check that checkbox/switch accept a `null` placeholder, ADR-0003).
