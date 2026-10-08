@@ -53,3 +53,5 @@ CLAUDE.local.md
 **/CLAUDE.md
 .claude/
 .mcp.json
+.agents/
+skills-lock.json
