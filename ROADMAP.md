@@ -2,7 +2,7 @@
 
 Living document. Last updated 2026-10-08.
 
-**Status:** M0 in progress (workspace, tooling and CI landed 2026-10-08). Next: §6. Decisions are recorded in [`docs/adr/`](./docs/adr/).
+**Status:** M0 done on 2026-10-08. Next: M1 (§6). Decisions are recorded in [`docs/adr/`](./docs/adr/).
 Tick the checkboxes here as work lands.
 
 Planning assumptions:
@@ -98,7 +98,8 @@ The only spartan dependency outside `src/lib/ui/` is `@spartan-ng/brain`.
 
 ### 1.4 Package identity and compatibility
 
-- npm name: `jsonforms-spartan` (unscoped, free on npm as of 2026-10-08) or a scope you own. Decide in M0.
+- npm name: `jsonforms-spartan`, unscoped (decided in M0 on 2026-10-08; free on npm that day). Matches the repo and
+  the entry points `jsonforms-spartan` and `jsonforms-spartan/core`.
 - Peer dependencies:
   - `@angular/core|common|forms|cdk` `^22`. Signal Forms is stable from 22.0, so Angular 21 is dropped.
   - `@jsonforms/core` `~3.8.0`. Pin the minor, because 3.9 is in alpha.
@@ -204,7 +205,7 @@ Session estimates are for one person at about 3 hours a session.
       `@angular/core/rxjs-interop`, `@jsonforms/angular` and reactive forms (`@angular/forms`; only
       `@angular/forms/signals` is allowed)
 - [x] GitHub Actions: lint, test, build on PRs
-- [ ] Decide the npm name; `CONTRIBUTING.md`
+- [x] Decide the npm name; `CONTRIBUTING.md`
 - [x] `docs/adr/` with ADR-0001 (signals only, on core), ADR-0002 (helm vendoring), ADR-0003 (empty values, proposed)
 
 ### M1: Signal binding tracer bullet (≈ 5 sessions). Proves the architecture end to end.
@@ -301,7 +302,6 @@ Rough calendar at one session a week: **0.1.0 ≈ 4.5–5 months**, 0.2.0 ≈ +1
 
 ## 6. Next three sessions
 
-1. M0 wrap-up: npm name, `CONTRIBUTING.md`, CI jobs as required checks on `main`.
-   M1: `<jf-form>` + AJV → Standard Schema adapter with tests, and the nested-path spike.
+1. M1: `<jf-form>` + AJV → Standard Schema adapter with tests, and the nested-path spike.
 2. M1: dispatcher, `injectJfControl()`, text control + vertical layout + rules in the demo.
 3. M1: vendor helm `field`, `label`, `input` (+ `tools/helm-diff`), and the `npm pack` fresh-app check.
