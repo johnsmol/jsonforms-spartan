@@ -293,7 +293,7 @@ Rough calendar at one session a week: **0.1.0 ≈ 4.5–5 months**, 0.2.0 ≈ +1
 | `''` vs missing property mismatch between inputs and JSON Schema `required` | Required fields look valid | ADR-0003 in M1; adapter tests |
 | Re-implementing `@jsonforms/angular` misses behaviours (middleware, additional errors) | Feature gaps | Listed as non-goals for 0.1; added on request |
 | Signal Forms is young (stable since 22.0) | API polish in minors | Signal Forms usage stays in `/core` and the renderers; early-warning job |
-| `@spartan-ng/brain` breaking change despite semver | Build/runtime errors | Peer range pinned to tested minors; weekly job |
+| `@spartan-ng/brain` breaking change despite semver | Build/runtime errors | Caret range from the oldest tested minor (`^1.6.0`); the weekly job tests the latest; narrow the range if a minor breaks |
 | Large schemas: whole-tree AJV validation on every change | Typing lag | Measure in the demo; debounce in the adapter if needed |
 | Scope creep at 2–4 h/week | Never ships | 0.1.0 = primitives + layouts; everything else after |
 
