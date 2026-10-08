@@ -2,8 +2,7 @@
 
 Living document. Last updated 2026-10-08.
 
-**Status:** M1 in progress: the `/core` binding, ADR-0003, vendored helm, the text control and vertical layout,
-and the first demo page landed on 2026-10-08. Next: §6. Decisions are recorded in [`docs/adr/`](./docs/adr/).
+**Status:** M1 done on 2026-10-08, except the optional `0.0.1` publish (not now, by decision). Next: M2 (§6). Decisions are recorded in [`docs/adr/`](./docs/adr/).
 Tick the checkboxes here as work lands.
 
 Planning assumptions:
@@ -228,9 +227,13 @@ Session estimates are for one person at about 3 hours a session.
 - [x] Vendor helm `field`, `label`, `input`; text control + VerticalLayout
 - [x] Demo schema with a required field, a HIDE rule and a DISABLE rule; runs zoneless, all components OnPush
 - [x] Decide ADR-0003 (empty-value handling)
-- [ ] `ng build`, `npm pack`, install the tarball in a **fresh** Angular 22 app. This checks the packaging, the
+- [x] `ng build`, `npm pack`, install the tarball in a **fresh** Angular 22 app. This checks the packaging, the
       peers, the `@source` instruction and that no `rxjs` import appears in `dist/`
-- [ ] Optional: publish `0.0.1` under the npm `next` tag to reserve the name
+  - Done manually on 2026-10-08: the build, Tailwind classes via `@source`, rendering, editing, errors, and
+    axe (0 violations) all worked. It showed that the spartan CLI doesn't install Tailwind (README now lists
+    the steps) and that AJV + lodash add ~200 kB. Script it as a CI job during release prep (M3).
+- [ ] Optional: publish `0.0.1` under the npm `next` tag to reserve the name. Not done for now (decided
+      2026-10-08).
 
 ### M2: Primitive controls (≈ 6 sessions)
 
@@ -307,13 +310,14 @@ Rough calendar at one session a week: **0.1.0 ≈ 4.5–5 months**, 0.2.0 ≈ +1
 | Signal Forms is young (stable since 22.0) | API polish in minors | Signal Forms usage stays in `/core` and the renderers; early-warning job |
 | `@spartan-ng/brain` breaking change despite semver | Build/runtime errors | Caret range from the oldest tested minor (`^1.6.0`); the weekly job tests the latest; narrow the range if a minor breaks |
 | Large schemas: whole-tree AJV validation on every change | Typing lag | Measure in the demo; debounce in the adapter if needed |
+| Bundle size: AJV + lodash from `@jsonforms/core` (~200 kB minified) | Initial load; Angular's default 500 kB budget is exceeded when a form is on the initial route | README recommends lazy routes; our own code is ~16 kB |
 | Scope creep at 2–4 h/week | Never ships | 0.1.0 = primitives + layouts; everything else after |
 
 ---
 
 ## 6. Next three sessions
 
-1. M1: `npm pack` check in a fresh Angular 22 app; publish `0.0.1` under `next` to reserve the name.
-   Playwright + axe on the demo page.
-2. M2: number control, and the Definition-of-done items still open for text: read-only mode.
-3. M2: boolean control (check that checkbox/switch accept a `null` placeholder, ADR-0003).
+1. M2: read-only mode (`options.readonly`, READONLY rules, a form-level `readonly` input) for the text
+   control; number/integer control. Demo pages per control with e2e + axe.
+2. M2: boolean control (check that checkbox/switch accept a `null` placeholder, ADR-0003).
+3. M2: enum control (select / radio group).
