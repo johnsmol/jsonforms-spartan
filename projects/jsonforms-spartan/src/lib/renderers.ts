@@ -8,6 +8,15 @@ import {
   toggleControlTester,
 } from './controls/toggle-control/toggle-control';
 import {
+  EnumControlRenderer,
+  enumControlTester,
+  oneOfEnumControlTester,
+} from './controls/enum-control/enum-control';
+import {
+  EnumRadioControlRenderer,
+  enumRadioControlTester,
+} from './controls/enum-radio-control/enum-radio-control';
+import {
   NumberControlRenderer,
   numberControlTester,
 } from './controls/number-control/number-control';
@@ -23,5 +32,8 @@ export const spartanRenderers: JfRendererEntry[] = [
   { tester: numberControlTester, renderer: NumberControlRenderer },
   { tester: booleanControlTester, renderer: BooleanControlRenderer },
   { tester: toggleControlTester, renderer: ToggleControlRenderer },
+  { tester: enumControlTester, renderer: EnumControlRenderer },
+  { tester: oneOfEnumControlTester, renderer: EnumControlRenderer },
+  { tester: enumRadioControlTester, renderer: EnumRadioControlRenderer },
   { tester: verticalLayoutTester, renderer: VerticalLayoutRenderer },
 ];
