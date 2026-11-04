@@ -1,7 +1,7 @@
 import { DestroyRef, Directive, effect, ElementRef, inject, input } from '@angular/core';
 
 /**
- * Fills gaps in spartan's native select and radio group. Put it on an element that wraps the component.
+ * Fills gaps in spartan's native select, radio group and date picker trigger. Put it on an element that wraps the component.
  *
  * - **Read-only.** Neither has a read-only mode, and a disabled one can't be focused. With `readonly`
  *   true, clicks, presses and every key but Tab are swallowed before the component sees them, and
@@ -31,7 +31,9 @@ export class JfsEnumA11y {
     });
 
     effect(() => {
-      const target = this.host.querySelector('select, [role="radiogroup"]');
+      const target = this.host.querySelector(
+        'select, [role="radiogroup"], [data-slot="date-picker-trigger"] button',
+      );
       set(target, 'aria-readonly', this.readonly() ? 'true' : null);
       set(target, 'aria-invalid', this.invalid() ? 'true' : null);
       set(target, 'aria-describedby', this.describedBy());

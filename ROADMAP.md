@@ -320,9 +320,9 @@ Rough calendar at one session a week: **0.1.0 ≈ 4.5–5 months**, 0.2.0 ≈ +1
 Done in M2 so far: read-only mode and the number/integer control (2026-11-04), and the boolean control
 (checkbox, and a switch for `options.toggle`) with vendored helm `checkbox` and `switch` (ADR-0004), and the
 enum control (native select, or radio group for `options.format: 'radio'`; `oneOf` enums use `title` labels),
-and multiline text (`options.multi`, a textarea).
+multiline text (`options.multi`, a textarea), and date (`format: date`, spartan's date picker).
 
-1. M2: date, then time and date-time.
+1. M2: time and date-time (native `type=time` / `datetime-local` inputs).
 2. M2: range (slider).
 3. M3: HorizontalLayout, Group and Label.
 
@@ -338,3 +338,8 @@ Notes:
   options are matched by index so numbers round-trip. It sets the value and touched state itself, and shows
   its error through `forceShow`. `controls/enum-a11y.ts` adds read-only (swallowed input, `aria-readonly`),
   `aria-invalid` and `aria-describedby` on the `select` or radio group. The radio group uses `[formField]`.
+- The date control drives `hlm-date-picker` (a `Date`-based accessor) without `[formField]`: it converts to and
+  from the `YYYY-MM-DD` string in `date-value.ts` and writes the field itself. It marks the field touched on
+  focus-out only while the calendar is closed (opening moves focus into the popover). Read-only renders a
+  read-only text input instead, since a button can't be read-only. The placeholder text colour is overridden
+  while the button is expanded, because spartan's colours fail axe contrast there.
