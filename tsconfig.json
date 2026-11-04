@@ -14,7 +14,9 @@
       "@spartan-ng/helm/separator": ["./projects/demo/src/ui/separator/src/index.ts"],
       "@spartan-ng/helm/input": ["./projects/demo/src/ui/input/src/index.ts"],
       "@spartan-ng/helm/checkbox": ["./projects/demo/src/ui/checkbox/src/index.ts"],
-      "@spartan-ng/helm/switch": ["./projects/demo/src/ui/switch/src/index.ts"]
+      "@spartan-ng/helm/switch": ["./projects/demo/src/ui/switch/src/index.ts"],
+      "@spartan-ng/helm/native-select": ["./projects/demo/src/ui/native-select/src/index.ts"],
+      "@spartan-ng/helm/radio-group": ["./projects/demo/src/ui/radio-group/src/index.ts"]
     },
     "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true,
