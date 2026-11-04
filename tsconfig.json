@@ -12,7 +12,9 @@
       "@spartan-ng/helm/field": ["./projects/demo/src/ui/field/src/index.ts"],
       "@spartan-ng/helm/label": ["./projects/demo/src/ui/label/src/index.ts"],
       "@spartan-ng/helm/separator": ["./projects/demo/src/ui/separator/src/index.ts"],
-      "@spartan-ng/helm/input": ["./projects/demo/src/ui/input/src/index.ts"]
+      "@spartan-ng/helm/input": ["./projects/demo/src/ui/input/src/index.ts"],
+      "@spartan-ng/helm/checkbox": ["./projects/demo/src/ui/checkbox/src/index.ts"],
+      "@spartan-ng/helm/switch": ["./projects/demo/src/ui/switch/src/index.ts"]
     },
     "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true,

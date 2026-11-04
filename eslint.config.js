@@ -4,6 +4,11 @@ const { defineConfig } = require('eslint/config');
 const tseslint = require('typescript-eslint');
 const angular = require('angular-eslint');
 
+const forbiddenForms = {
+  name: '@angular/forms',
+  message: 'No reactive or template-driven forms. Use @angular/forms/signals only.',
+};
+
 /** Imports the library must never use (ADR-0001, ADR-0002). */
 const libraryRestrictedImports = {
   paths: [
@@ -12,10 +17,7 @@ const libraryRestrictedImports = {
       name: '@angular/core/rxjs-interop',
       message: 'No RxJS in library code (ADR-0001). Use signals.',
     },
-    {
-      name: '@angular/forms',
-      message: 'No reactive or template-driven forms. Use @angular/forms/signals only.',
-    },
+    forbiddenForms,
   ],
   patterns: [
     { group: ['rxjs/*'], message: 'No RxJS in library code (ADR-0001). Use signals.' },
@@ -69,6 +71,22 @@ module.exports = defineConfig([
     files: ['projects/jsonforms-spartan/**/*.ts'],
     rules: {
       'no-restricted-imports': ['error', libraryRestrictedImports],
+    },
+  },
+  {
+    // The vendored helm implements ControlValueAccessor, which Signal Forms binds through [formField]
+    // (ADR-0004). Everything else stays banned.
+    files: ['projects/jsonforms-spartan/src/lib/ui/**/*.ts'],
+    rules: {
+      // Generated code, kept as the CLI wrote it (ADR-0002); `class` is aliased on purpose.
+      '@angular-eslint/no-input-rename': 'off',
+      'no-restricted-imports': [
+        'error',
+        {
+          ...libraryRestrictedImports,
+          paths: libraryRestrictedImports.paths.filter((path) => path !== forbiddenForms),
+        },
+      ],
     },
   },
   {
