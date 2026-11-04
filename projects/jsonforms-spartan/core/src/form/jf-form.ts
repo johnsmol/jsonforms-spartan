@@ -26,7 +26,7 @@ import type { JfRendererEntry } from '../registry';
 import { createAjvStandardSchema, type JfAjv } from './ajv-standard-schema';
 import { jsonEqual, materialize, prune } from './empty-values';
 import { JfFormContext } from './jf-form-context';
-import { applyEnablementRules } from './rules';
+import { applyEnablementRules, applyReadonlyRules } from './rules';
 
 /**
  * Hosts a JSON Forms form. The data is a two-way bound signal; validation comes from the JSON Schema
@@ -52,6 +52,8 @@ export class JfForm implements JfFormContext {
   readonly renderers = input<readonly JfRendererEntry[]>([]);
   /** A custom AJV instance, for example with extra formats. Defaults to `createAjv()` from JSON Forms. */
   readonly ajv: InputSignal<JfAjv | undefined> = input<JfAjv>();
+  /** Makes every control read-only: focusable and submitted, but not editable. */
+  readonly readonly = input(false);
   /** The form data. Empty values are absent properties (ADR-0003). */
   readonly data = model<unknown>({});
 
@@ -102,6 +104,14 @@ export class JfForm implements JfFormContext {
         (root) => {
           validateStandardSchema(root, validator as Parameters<typeof validateStandardSchema>[1]);
           applyEnablementRules(root, uischema, this.value, this.ajvInstance);
+          applyReadonlyRules(
+            root,
+            uischema,
+            this.resolvedSchema(),
+            this.value,
+            this.ajvInstance,
+            this.readonly,
+          );
         },
         { injector: this.formInjector },
       );

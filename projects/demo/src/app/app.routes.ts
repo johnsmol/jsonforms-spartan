@@ -6,5 +6,10 @@ export const routes: Routes = [
     title: 'Text controls and rules · jsonforms-spartan demo',
     loadComponent: () => import('./pages/basic/basic-page').then((m) => m.BasicPage),
   },
+  {
+    path: 'numbers',
+    title: 'Number controls and read-only · jsonforms-spartan demo',
+    loadComponent: () => import('./pages/numbers/numbers-page').then((m) => m.NumbersPage),
+  },
   { path: '**', redirectTo: '' },
 ];

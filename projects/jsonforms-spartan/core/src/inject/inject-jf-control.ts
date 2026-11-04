@@ -36,6 +36,8 @@ export interface JfControl<T> {
   readonly description: Signal<string | undefined>;
   /** Whether the enclosing object schema lists the property as required. */
   readonly required: Signal<boolean>;
+  /** `true` when the form, the schema (`readOnly`), an option or a READONLY rule makes the control read-only. */
+  readonly readonly: Signal<boolean>;
   /** `false` when a DISABLE/ENABLE rule on the control or an enclosing layout disables it. */
   readonly enabled: Signal<boolean>;
 }
@@ -69,6 +71,7 @@ export function injectJfControl<T = unknown>(): JfControl<T> {
     showLabel: computed(() => labelDescription().show ?? true),
     description: computed(() => schema().description),
     required: computed(() => isRequired(dispatch.schema(), uischema().scope, form.rootSchema())),
+    readonly: computed(() => field()?.().readonly() ?? false),
     enabled: computed(() => {
       const state = field();
       return state ? !state().disabled() : dispatch.enabled();
