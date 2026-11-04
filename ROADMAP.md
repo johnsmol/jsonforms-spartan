@@ -317,13 +317,18 @@ Rough calendar at one session a week: **0.1.0 ≈ 4.5–5 months**, 0.2.0 ≈ +1
 
 ## 6. Next three sessions
 
-Done in M2 so far (2026-11-04): read-only mode (form-level `readonly` input, schema `readOnly`,
-`options.readonly` on controls and layouts, READONLY/WRITABLE rules, via Signal Forms `readonly()`) and the
-number/integer control, with a demo page, e2e and axe.
+Done in M2 so far: read-only mode and the number/integer control (2026-11-04), and the boolean control
+(checkbox, and a switch for `options.toggle`) with vendored helm `checkbox` and `switch` (ADR-0004).
 
-1. M2: boolean control (check that checkbox/switch accept a `null` placeholder, ADR-0003); `options.toggle`.
-2. M2: enum control (select / radio group).
-3. M2: multiline text (`options.multi`), then date/time.
+1. M2: enum control (select / radio group); `oneOf` enums with `title` labels.
+2. M2: multiline text (`options.multi`), then date/time.
+3. M2: range (slider).
 
-Notes from the number control: Signal Forms owns `min`/`max` on `[formField]` inputs (binding them is a
-compile error), so schema bounds are enforced by AJV only and not set as HTML attributes.
+Notes:
+
+- Signal Forms owns `min`, `max` and `required` on `[formField]` elements (binding them is a compile error),
+  so schema bounds and the required flag are not set as HTML attributes; AJV reports them. The text and
+  number controls use `aria-required`, the checkbox and switch an sr-only "(required)" in the label.
+- spartan's checkbox and switch put `aria-invalid` on a wrapper, `aria-describedby` on the wrong element
+  unless passed explicitly, and have no read-only mode. `controls/toggle-a11y.ts` fills these gaps.
+- A boolean that is never touched stays absent (`null` placeholder); once set, `false` is kept in the data.

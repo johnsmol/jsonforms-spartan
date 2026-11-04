@@ -1,5 +1,13 @@
 import type { JfRendererEntry } from 'jsonforms-spartan/core';
 import {
+  BooleanControlRenderer,
+  booleanControlTester,
+} from './controls/boolean-control/boolean-control';
+import {
+  ToggleControlRenderer,
+  toggleControlTester,
+} from './controls/toggle-control/toggle-control';
+import {
   NumberControlRenderer,
   numberControlTester,
 } from './controls/number-control/number-control';
@@ -13,5 +21,7 @@ import {
 export const spartanRenderers: JfRendererEntry[] = [
   { tester: textControlTester, renderer: TextControlRenderer },
   { tester: numberControlTester, renderer: NumberControlRenderer },
+  { tester: booleanControlTester, renderer: BooleanControlRenderer },
+  { tester: toggleControlTester, renderer: ToggleControlRenderer },
   { tester: verticalLayoutTester, renderer: VerticalLayoutRenderer },
 ];

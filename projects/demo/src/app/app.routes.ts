@@ -11,5 +11,10 @@ export const routes: Routes = [
     title: 'Number controls and read-only · jsonforms-spartan demo',
     loadComponent: () => import('./pages/numbers/numbers-page').then((m) => m.NumbersPage),
   },
+  {
+    path: 'booleans',
+    title: 'Boolean controls · jsonforms-spartan demo',
+    loadComponent: () => import('./pages/booleans/booleans-page').then((m) => m.BooleansPage),
+  },
   { path: '**', redirectTo: '' },
 ];
