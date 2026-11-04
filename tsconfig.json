@@ -17,7 +17,12 @@
       "@spartan-ng/helm/switch": ["./projects/demo/src/ui/switch/src/index.ts"],
       "@spartan-ng/helm/native-select": ["./projects/demo/src/ui/native-select/src/index.ts"],
       "@spartan-ng/helm/radio-group": ["./projects/demo/src/ui/radio-group/src/index.ts"],
-      "@spartan-ng/helm/textarea": ["./projects/demo/src/ui/textarea/src/index.ts"]
+      "@spartan-ng/helm/textarea": ["./projects/demo/src/ui/textarea/src/index.ts"],
+      "@spartan-ng/helm/date-picker": ["./projects/demo/src/ui/date-picker/src/index.ts"],
+      "@spartan-ng/helm/calendar": ["./projects/demo/src/ui/calendar/src/index.ts"],
+      "@spartan-ng/helm/select": ["./projects/demo/src/ui/select/src/index.ts"],
+      "@spartan-ng/helm/popover": ["./projects/demo/src/ui/popover/src/index.ts"],
+      "@spartan-ng/helm/input-group": ["./projects/demo/src/ui/input-group/src/index.ts"]
     },
     "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true,
