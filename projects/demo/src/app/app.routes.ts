@@ -21,5 +21,10 @@ export const routes: Routes = [
     title: 'Enum controls · jsonforms-spartan demo',
     loadComponent: () => import('./pages/enums/enums-page').then((m) => m.EnumsPage),
   },
+  {
+    path: 'dates',
+    title: 'Date controls · jsonforms-spartan demo',
+    loadComponent: () => import('./pages/dates/dates-page').then((m) => m.DatesPage),
+  },
   { path: '**', redirectTo: '' },
 ];

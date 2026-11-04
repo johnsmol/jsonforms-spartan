@@ -7,6 +7,7 @@ import {
   ToggleControlRenderer,
   toggleControlTester,
 } from './controls/toggle-control/toggle-control';
+import { DateControlRenderer, dateControlTester } from './controls/date-control/date-control';
 import {
   EnumControlRenderer,
   enumControlTester,
@@ -37,6 +38,7 @@ export const spartanRenderers: JfRendererEntry[] = [
   { tester: numberControlTester, renderer: NumberControlRenderer },
   { tester: booleanControlTester, renderer: BooleanControlRenderer },
   { tester: toggleControlTester, renderer: ToggleControlRenderer },
+  { tester: dateControlTester, renderer: DateControlRenderer },
   { tester: enumControlTester, renderer: EnumControlRenderer },
   { tester: oneOfEnumControlTester, renderer: EnumControlRenderer },
   { tester: enumRadioControlTester, renderer: EnumRadioControlRenderer },
