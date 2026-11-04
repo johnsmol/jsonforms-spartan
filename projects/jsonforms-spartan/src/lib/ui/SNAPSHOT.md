@@ -9,8 +9,8 @@ spartan CLI generated in `projects/demo/src/ui`.
 | Generated with | `@spartan-ng/cli` 1.6.3 |
 | Brain at generation | `@spartan-ng/brain` 1.6.3 |
 | Style | the CLI's default (spartan 1.x has a single helm style) |
-| Generated on | 2026-10-08; `checkbox`, `switch`, `native-select` and `radio-group` added 2026-11-04 |
-| Components | `checkbox`, `field`, `input`, `label`, `native-select`, `radio-group`, `separator` (used by `field`), `switch`, `utils` |
+| Generated on | 2026-10-08; `checkbox`, `switch`, `native-select`, `radio-group` and `textarea` added 2026-11-04 |
+| Components | `checkbox`, `field`, `input`, `label`, `native-select`, `radio-group`, `separator` (used by `field`), `switch`, `textarea`, `utils` |
 
 The only change from the CLI output is that `@spartan-ng/helm/<name>` imports become relative imports of
 `<name>/src`, so they never resolve to an app's own helm.
