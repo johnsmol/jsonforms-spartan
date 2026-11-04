@@ -4,6 +4,12 @@
   "lib": {
     "entryFile": "src/public-api.ts"
   },
-  "allowedNonPeerDependencies": ["class-variance-authority", "clsx", "tailwind-merge"],
+  "allowedNonPeerDependencies": [
+    "@ng-icons/core",
+    "@ng-icons/lucide",
+    "class-variance-authority",
+    "clsx",
+    "tailwind-merge"
+  ],
   "assets": ["THIRD_PARTY_NOTICES.md"]
 }
