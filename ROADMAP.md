@@ -319,9 +319,10 @@ Rough calendar at one session a week: **0.1.0 ≈ 4.5–5 months**, 0.2.0 ≈ +1
 
 Done in M2 so far: read-only mode and the number/integer control (2026-11-04), and the boolean control
 (checkbox, and a switch for `options.toggle`) with vendored helm `checkbox` and `switch` (ADR-0004), and the
-enum control (native select, or radio group for `options.format: 'radio'`; `oneOf` enums use `title` labels).
+enum control (native select, or radio group for `options.format: 'radio'`; `oneOf` enums use `title` labels),
+and multiline text (`options.multi`, a textarea).
 
-1. M2: multiline text (`options.multi`), then date/time.
+1. M2: date, then time and date-time.
 2. M2: range (slider).
 3. M3: HorizontalLayout, Group and Label.
 

@@ -14,7 +14,8 @@ import { JfForm } from 'jsonforms-spartan/core';
         <h2 class="text-xl font-semibold">Text controls and rules</h2>
         <p class="text-muted-foreground text-sm">
           "Name" and "Email" are required. "How did you hear about us?" is enabled once a name is
-          entered. "VAT number" appears once a company is entered.
+          entered. "Message" is a multi-line text area (<code>options.multi</code>). "VAT number"
+          appears once a company is entered.
         </p>
       </header>
 
@@ -57,6 +58,7 @@ export class BasicPage {
         description: 'We only use it to reply to you.',
       },
       referral: { type: 'string', title: 'How did you hear about us?' },
+      message: { type: 'string', title: 'Message', description: 'Line breaks are kept.' },
       company: { type: 'string', title: 'Company' },
       vat: { type: 'string', title: 'VAT number', pattern: '^[A-Z]{2}[0-9A-Z]{8,12}$' },
     },
@@ -79,6 +81,7 @@ export class BasicPage {
         scope: '#/properties/referral',
         rule: { effect: 'ENABLE', condition: this.nameEntered },
       },
+      { type: 'Control', scope: '#/properties/message', options: { multi: true } },
       { type: 'Control', scope: '#/properties/company' },
       {
         type: 'Control',
