@@ -1,8 +1,8 @@
 # Roadmap and implementation plan
 
-Living document. Last updated 2026-10-08.
+Living document. Last updated 2026-11-04.
 
-**Status:** M1 done on 2026-10-08, except the optional `0.0.1` publish (not now, by decision). Next: M2 (§6). Decisions are recorded in [`docs/adr/`](./docs/adr/).
+**Status:** M1 done on 2026-10-08, except the optional `0.0.1` publish (not now, by decision). M2 in progress (§6). Decisions are recorded in [`docs/adr/`](./docs/adr/).
 Tick the checkboxes here as work lands.
 
 Planning assumptions:
@@ -317,7 +317,13 @@ Rough calendar at one session a week: **0.1.0 ≈ 4.5–5 months**, 0.2.0 ≈ +1
 
 ## 6. Next three sessions
 
-1. M2: read-only mode (`options.readonly`, READONLY rules, a form-level `readonly` input) for the text
-   control; number/integer control. Demo pages per control with e2e + axe.
-2. M2: boolean control (check that checkbox/switch accept a `null` placeholder, ADR-0003).
-3. M2: enum control (select / radio group).
+Done in M2 so far (2026-11-04): read-only mode (form-level `readonly` input, schema `readOnly`,
+`options.readonly` on controls and layouts, READONLY/WRITABLE rules, via Signal Forms `readonly()`) and the
+number/integer control, with a demo page, e2e and axe.
+
+1. M2: boolean control (check that checkbox/switch accept a `null` placeholder, ADR-0003); `options.toggle`.
+2. M2: enum control (select / radio group).
+3. M2: multiline text (`options.multi`), then date/time.
+
+Notes from the number control: Signal Forms owns `min`/`max` on `[formField]` inputs (binding them is a
+compile error), so schema bounds are enforced by AJV only and not set as HTML attributes.
