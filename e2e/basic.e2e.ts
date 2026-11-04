@@ -69,6 +69,17 @@ test.describe('text controls and rules page', () => {
     await page.keyboard.press('Tab');
     await expect(page.getByLabel('How did you hear about us?')).toBeFocused();
     await page.keyboard.press('Tab');
+    await expect(page.getByLabel('Message')).toBeFocused();
+    await page.keyboard.press('Tab');
     await expect(page.getByLabel('Company')).toBeFocused();
+  });
+
+  test('keeps line breaks typed in the multi-line field', async ({ page }) => {
+    const message = page.getByRole('textbox', { name: 'Message' });
+    await message.focus();
+    await page.keyboard.type('one');
+    await page.keyboard.press('Enter');
+    await page.keyboard.type('two');
+    await expect(page.locator('pre')).toContainText('"message": "one\\ntwo"');
   });
 });

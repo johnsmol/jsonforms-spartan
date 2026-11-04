@@ -17,6 +17,10 @@ import {
   enumRadioControlTester,
 } from './controls/enum-radio-control/enum-radio-control';
 import {
+  MultilineControlRenderer,
+  multilineControlTester,
+} from './controls/multiline-control/multiline-control';
+import {
   NumberControlRenderer,
   numberControlTester,
 } from './controls/number-control/number-control';
@@ -29,6 +33,7 @@ import {
 /** The spartan renderer set. Pass it to `<jf-form [renderers]>`. */
 export const spartanRenderers: JfRendererEntry[] = [
   { tester: textControlTester, renderer: TextControlRenderer },
+  { tester: multilineControlTester, renderer: MultilineControlRenderer },
   { tester: numberControlTester, renderer: NumberControlRenderer },
   { tester: booleanControlTester, renderer: BooleanControlRenderer },
   { tester: toggleControlTester, renderer: ToggleControlRenderer },
