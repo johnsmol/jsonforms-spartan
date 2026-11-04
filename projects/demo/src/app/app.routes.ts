@@ -16,5 +16,10 @@ export const routes: Routes = [
     title: 'Boolean controls · jsonforms-spartan demo',
     loadComponent: () => import('./pages/booleans/booleans-page').then((m) => m.BooleansPage),
   },
+  {
+    path: 'enums',
+    title: 'Enum controls · jsonforms-spartan demo',
+    loadComponent: () => import('./pages/enums/enums-page').then((m) => m.EnumsPage),
+  },
   { path: '**', redirectTo: '' },
 ];

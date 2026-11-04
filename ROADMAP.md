@@ -318,11 +318,12 @@ Rough calendar at one session a week: **0.1.0 ≈ 4.5–5 months**, 0.2.0 ≈ +1
 ## 6. Next three sessions
 
 Done in M2 so far: read-only mode and the number/integer control (2026-11-04), and the boolean control
-(checkbox, and a switch for `options.toggle`) with vendored helm `checkbox` and `switch` (ADR-0004).
+(checkbox, and a switch for `options.toggle`) with vendored helm `checkbox` and `switch` (ADR-0004), and the
+enum control (native select, or radio group for `options.format: 'radio'`; `oneOf` enums use `title` labels).
 
-1. M2: enum control (select / radio group); `oneOf` enums with `title` labels.
-2. M2: multiline text (`options.multi`), then date/time.
-3. M2: range (slider).
+1. M2: multiline text (`options.multi`), then date/time.
+2. M2: range (slider).
+3. M3: HorizontalLayout, Group and Label.
 
 Notes:
 
@@ -332,3 +333,7 @@ Notes:
 - spartan's checkbox and switch put `aria-invalid` on a wrapper, `aria-describedby` on the wrong element
   unless passed explicitly, and have no read-only mode. `controls/toggle-a11y.ts` fills these gaps.
 - A boolean that is never touched stays absent (`null` placeholder); once set, `false` is kept in the data.
+- The enum select is a native select (`hlm-native-select`) without `[formField]`: it only handles strings, and
+  options are matched by index so numbers round-trip. It sets the value and touched state itself, and shows
+  its error through `forceShow`. `controls/enum-a11y.ts` adds read-only (swallowed input, `aria-readonly`),
+  `aria-invalid` and `aria-describedby` on the `select` or radio group. The radio group uses `[formField]`.
